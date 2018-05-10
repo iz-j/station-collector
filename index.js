@@ -137,7 +137,14 @@ var saveStations = (stations) => {
     return a.line.localeCompare(b.line);
   });
 
+  console.log('Filtering stations...');
+  stations = stations.filter((s, index) => {
+    const same = stations.findIndex(x => x.line === s.line && x.name === s.name);
+    return index === same;
+  });
+
   fs.writeFileSync('./stations.json', JSON.stringify(stations, undefined, 2));
+  console.log(`${stations.length} stations saved.`);
 
   return Promise.resolve();
 };
